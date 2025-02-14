@@ -1,61 +1,50 @@
-import java.io.*;
 import java.util.*;
+import java.io.*;
 
-public class Main {
+class Main {
+    static int N, M;
+    static int[][] graph;
+    static boolean[] visited;
+    static int count = 0;
+    static int[] dx = {0, 0, -1, 1};
+    static int[] dy = {1, -1, 0, 0};
 
-    public static int N;
-    public static int M;
-    public static int answer;
-    public static ArrayList<Integer>[] edgeList;
-    public static boolean[] visited;
-    public static int[] dfsArr;
-    public static StringBuilder sb = new StringBuilder();
-
-    public static void main(String[] args) throws Exception {
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
-        String line = br.readLine();
-        String[] split = line.split(" ");
-
-        N = Integer.parseInt(split[0]);
-        M = Integer.parseInt(split[1]);
-
-        dfsArr = new int[N];                    // ?
-        edgeList = new ArrayList[N + 1];        // 간선 리스트
-        visited = new boolean[N + 1];           // 방문 여부 (연결되었는지 여부)
-
-        for (int i = 0; i < N + 1; i++) {
-            edgeList[i] = new ArrayList<>();
-        }
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        
+        N = Integer.parseInt(st.nextToken());
+        M = Integer.parseInt(st.nextToken());
+        
+        graph = new int[N + 1][N + 1];
+        visited = new boolean[N + 1];
+        
         for (int i = 0; i < M; i++) {
-            String line1 = br.readLine();
-            String[] split1 = line1.split(" ");
-            int from = Integer.parseInt(split1[0]);
-            int to = Integer.parseInt(split1[1]);
-            edgeList[from].add(to);
-            edgeList[to].add(from);
+            st = new StringTokenizer(br.readLine());
+            int a = Integer.parseInt(st.nextToken());
+            int b = Integer.parseInt(st.nextToken());
+            
+            graph[a][b] = 1;
+            graph[b][a] = 1;
         }
-
+        
         for (int i = 1; i <= N; i++) {
             if (!visited[i]) {
                 dfs(i);
-                answer++;
+                count++;
             }
         }
-
-        bw.write(answer + "\n");
-
-        bw.flush();
-        bw.close();
-        br.close();
+        
+        System.out.println(count);
+        
     }
-
-    private static void dfs(int start) {
+    
+    static void dfs(int start) {
         visited[start] = true;
-        for (int to : edgeList[start]) {
-            if (!visited[to]) {
-                dfs(to);
+        
+        for(int i = 1; i <= N; i++) {
+            if (graph[start][i] == 1 && !visited[i]) {
+                dfs(i);
             }
         }
     }
