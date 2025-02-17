@@ -1,60 +1,49 @@
-import java.io.*;
 import java.util.*;
+import java.io.*;
 
-public class Main {
+class Main {
+    static int n, m;
+    static int one, two;
+    static int[][] xy;
+    static int[] dist;
 
-    static ArrayList<ArrayList<Integer>> a;
-    static boolean[] visited;
-    static int ans = -1;
-
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-        StringTokenizer st;
-
-        int N = Integer.parseInt(br.readLine());
-
-        st = new StringTokenizer(br.readLine());
-        int findX = Integer.parseInt(st.nextToken());
-        int findY = Integer.parseInt(st.nextToken());
-
-        a = new ArrayList<>();
-        for (int i = 0; i <= N; i++) {
-            a.add(new ArrayList<>());
-        }
-
-        int M = Integer.parseInt(br.readLine());
-        // 양방향 인접리스트 구현.
-        for (int i = 0; i < M; i++) {
+        n = Integer.parseInt(br.readLine());
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        one = Integer.parseInt(st.nextToken());
+        two = Integer.parseInt(st.nextToken());
+        m = Integer.parseInt(br.readLine());
+        xy = new int[n + 1][n + 1];
+        dist = new int[n + 1];
+        
+        for (int i = 0; i < m; i++) {
             st = new StringTokenizer(br.readLine());
-            int x = Integer.parseInt(st.nextToken());
-            int y = Integer.parseInt(st.nextToken());
-
-            a.get(x).add(y);
-            a.get(y).add(x);
+            int a = Integer.parseInt(st.nextToken());
+            int b = Integer.parseInt(st.nextToken());
+            xy[a][b] = xy[b][a] = 1;
         }
-
-        visited = new boolean[N + 1];
-        DFS(findX, findY, 0);
-
-        bw.write(ans + "\n");
-        bw.flush();
-        bw.close();
-        br.close();
+        
+        dfs(one);
+        
+        if(dist[two] == 0) {
+            System.out.println("-1");
+        } else {
+            System.out.println(dist[two]);
+        }
+        
+        
     }
-
-    // DFS를 이용하여 촌수 계산.
-    public static void DFS(int pos, int find, int cnt) {
-        visited[pos] = true;
-
-        for (int i : a.get(pos)) {
-            if (!visited[i]) {
-                if (i == find) { // 찾으려는 사람의 도달.
-                    ans = cnt + 1;
-                    return;
-                }
-
-                DFS(i, find, cnt + 1);
+    
+    static void dfs(int index) {
+        if(index == two) {
+            return;
+        }
+        
+        for (int i = 1; i <= n; i ++) {
+            if (xy[index][i] == 1 && dist[i] == 0) {
+                dist[i] = dist[index] + 1;
+                dfs(i);
             }
         }
     }
