@@ -1,34 +1,31 @@
-import java.util.*;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-import java.io.*;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class Main {
-    public static void main (String[] args) throws IOException {
-
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String input = br.readLine().toUpperCase();
+        String str = br.readLine().toUpperCase();
 
-        Stream<String> stream = Stream.of(input.split(""));
-        Map<String, Integer> map = stream.collect(
-            Collectors.toMap(Function.identity(), value -> 1, Integer::sum)
-        );
+        int[] count = new int[26];
 
-        String PreStr = "";
-        int max = 0;
-
-        for (Map.Entry<String, Integer> m : map.entrySet()) {
-            int val = (int)m.getValue();
-            if (val > max) {
-                max = val;
-                PreStr = m.getKey();
-            }
-            else if (val == max) {
-                PreStr = "?";
-            }
+        for (int i = 0; i < str.length(); i++) {
+            int num = str.charAt(i) -'A' ;
+            count[num]++;
         }
 
-        System.out.println(PreStr);
+        int max = 0;
+        char answer = '?';
+        for (int i = 0; i < count.length; i++) {
+            if(max < count[i]){
+                max = count[i];
+                answer = (char)(i+'A');
+            } else if (max == count[i]){
+                answer = '?';
+            }
+        }
+        System.out.println(answer);
+
     }
 }
