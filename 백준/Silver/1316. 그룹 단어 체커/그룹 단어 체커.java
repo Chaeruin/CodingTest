@@ -1,36 +1,30 @@
-import java.util.*;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
 
-class Main {
-    static int N;
-    static int count = 0;
-
+public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        N = Integer.parseInt(br.readLine());
-        
-        
-        for (int i = 0; i < N; i++) {
-            if (isGroupString(br.readLine())) {
-                count++;
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int num = Integer.parseInt(st.nextToken());
+
+        int groupWords = num;
+
+        for (int i = 0; i < num; i++) {
+            String word = br.readLine();
+            boolean[] isChecked = new boolean[26];
+
+            for (int j = 0; j < word.length(); j++) {
+                if (!isChecked[word.charAt(j) - 'a']) {
+                    isChecked[word.charAt(j) - 'a'] = true;
+                } else if (j > 0 && word.charAt(j) != word.charAt(j - 1)) {
+                    groupWords--;
+                    break;
+                }
             }
         }
         
-        System.out.println(count);
-    }
-    
-    static boolean isGroupString(String str) {
-        boolean[] alpha = new boolean[26];
-        for (int i = 0; i < str.length(); i++) {
-            int now = str.charAt(i);
-            int prev = (i > 0) ? str.charAt(i - 1) : 0;
-            
-            if (!alpha[now - 'a']) {
-                alpha[now - 'a'] = true;
-            } else if (now != prev) {
-                return false;
-            }
-        }
-        return true;
+        System.out.println(groupWords);
     }
 }
