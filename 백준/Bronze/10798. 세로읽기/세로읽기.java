@@ -1,43 +1,24 @@
-import java.io.*;
-import java.util.*;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class Main {
-    public static void main(String[] args) {
-
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        List<String> strings = new ArrayList<>();
 
-        try {
-            String str;
+        String[][] arr = new String[5][15];
 
-            while ((str = br.readLine()) != null) {
-                strings.add(str);
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        for (int i = 0; i < 5; i++) {
+            arr[i] = br.readLine().split("");
         }
-        
-        List<String> result = new ArrayList<>();
-        int i = 0;
-        
-        List<Integer> length = new ArrayList<>();
-        for (String s : strings) {
-            length.add(s.length());
-        }
-        Integer maxLength = Collections.max(length);
 
-        while (i <= maxLength){
-            for (String str : strings) {
-                if (str.length() <= i) {
-                    continue;
+        for (int j = 0; j < 15; j++) {
+            for (int i = 0; i < 5; i++) {
+                if (j < arr[i].length) {
+                    System.out.print(arr[i][j]);
                 }
-                result.add(String.valueOf(str.charAt(i)));
             }
-            i++;
         }
-
-        String answer = String.join("",result);
-        System.out.println(answer);
     }
 }
