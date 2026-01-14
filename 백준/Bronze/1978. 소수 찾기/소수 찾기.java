@@ -1,30 +1,40 @@
-import java.util.*;
-import java.io.*;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
 
 public class Main {
-    public static void main(String[] args) throws NumberFormatException, IOException {
-
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int N = Integer.parseInt(br.readLine());
-        // String [] str = br.readLine().split(" ");
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        int cnt = 0;
 
-        for (int k = 0; k < N; k++) {
-            int i = Integer.parseInt(st.nextToken());
-            if (isPrime(i)) cnt++;
+        int num = Integer.parseInt(br.readLine());
+
+        StringTokenizer st = new StringTokenizer(br.readLine());
+
+        int count = 0;
+
+        for (int i = 0; i < num; i++) {
+            int number = Integer.parseInt(st.nextToken());
+            if (is_Prime(number)) count++;
         }
 
-        System.out.println(cnt);
+        System.out.println(count);
+
     }
 
-    public static boolean isPrime(int i) {
-        if (i < 2) return false;
-        int k = 2;
-        while (k != i) {
-            if (i % k == 0) return false;
-            k++;
+
+    public static boolean is_Prime(int Number) {
+
+        if(Number == 1){
+            return false;
         }
+
+        for(int i = 2; i <= Math.sqrt(Number); i++) {
+            if(Number % i == 0) return false;
+        }
+
         return true;
     }
+
 }
