@@ -1,10 +1,12 @@
-import java.util.*;
-import java.io.*;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
 
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
         StringTokenizer st = new StringTokenizer(br.readLine());
 
         int a = Integer.parseInt(st.nextToken());
@@ -14,13 +16,11 @@ public class Main {
         int e = Integer.parseInt(st.nextToken());
         int f = Integer.parseInt(st.nextToken());
 
-        for(int i = -999; i <= 999; i++) { 
-            for(int j = -999; j <= 999; j++) {
-                if(a*i + b*j  == c){ // ax + by 가 C이고(x = i, y = j)
-                    if(d*i + e*j  == f) { // dx + ey가 f일 때(x = i, y = j)
-                        System.out.println(i + " " + j);
-                        break;
-                    }
+        for (int x = -999; x <= 999; x++) {
+            for (int y = -999; y <= 999; y++) {
+                if (((a * x) + (b * y) == c) && ((d * x) + (e * y) == f)) {
+                    System.out.println(x + " " + y);
+                    return;
                 }
             }
         }
