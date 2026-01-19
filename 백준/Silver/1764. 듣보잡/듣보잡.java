@@ -1,42 +1,42 @@
-import java.io.*;
-import java.util.*;
-
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.StringTokenizer;
 
 public class Main {
-    static int cnt = 0;
-    public static void main (String[] args) throws IOException{
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer stk = new StringTokenizer(br.readLine()," ");
-        
-        int n = Integer.parseInt(stk.nextToken());
-        int m = Integer.parseInt(stk.nextToken());
+        StringTokenizer st = new StringTokenizer(br.readLine());
 
-        HashSet<String> listen = new HashSet<>();
-        HashSet<String> look = new HashSet<>();
+        int N = Integer.parseInt(st.nextToken());
+        int M = Integer.parseInt(st.nextToken());
 
-        String str;
-        int i = 0, j = 0;
-        while (i < n) {
-            str = br.readLine();
-            listen.add(str);
-            i++;
-        }
-        while (j < m) {
-            str = br.readLine();
-            look.add(str);
-            j++;
+        Set<String> listen = new HashSet<>();
+        List<String> listLook = new ArrayList<>();
+
+        for (int i = 0; i < N; i++) {
+            listen.add(br.readLine().trim());
         }
 
-        HashSet<String> listlook = new HashSet<>();
-        listen.forEach(s1 -> {
-                if (look.contains(s1)) {
-                    Main.cnt++;
-                    listlook.add(s1);
-                }
+        int count = 0;
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < M; i++) {
+            String input = br.readLine().trim();
+            if(listen.contains(input)) {
+                count++;
+                listLook.add(input);
             }
-        );
+        }
 
-        System.out.println(cnt);
-        listlook.stream().sorted().forEach(item -> System.out.println(item));
+        Collections.sort(listLook);
+
+        System.out.println(count);
+        listLook.forEach(System.out::println);
     }
 }
