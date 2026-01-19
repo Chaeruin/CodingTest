@@ -1,38 +1,37 @@
+
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.StringTokenizer;
 
 public class Main {
-    public static void main (String[] args) throws IOException {
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringTokenizer st = new StringTokenizer(br.readLine());
 
         int N = Integer.parseInt(st.nextToken());
         int M = Integer.parseInt(st.nextToken());
 
-        Map<String, Integer> map1 = new HashMap<>();
-        Map<Integer, String> map2 = new HashMap<>();
+        String[] list = new String[N + 1];
+        Map<String, Integer> map = new HashMap<>();
 
-        for (int i = 0; i < N; i++) {
+        for (int i = 1; i <= N; i++) {
             String name = br.readLine();
-            map1.put(name, i+1);
-            map2.put(i+1, name);
+            list[i] = name;
+            map.put(name, i);
         }
 
+        StringBuilder sb = new StringBuilder();
         for (int i = 0; i < M; i++) {
-            String command = br.readLine();
-            if (Character.isDigit(command.charAt(0))) {
-                bw.write(map2.get(Integer.parseInt(command))+ "\n");
+            String input = br.readLine();
+            if (input.charAt(0) >= '0' && input.charAt(0) <= '9') {
+                sb.append(list[Integer.parseInt(input)]).append("\n");
             } else {
-                bw.write(map1.get(command) + "\n");
+                sb.append(map.get(input)).append("\n");
             }
         }
-        bw.flush();
+        System.out.print(sb);
     }
 }
