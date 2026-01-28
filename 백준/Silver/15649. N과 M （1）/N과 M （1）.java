@@ -1,12 +1,14 @@
-import java.util.*;
-import java.io.*;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
 
 public class Main {
-
+    static StringBuilder sb = new StringBuilder();
     static int N, M;
+    static boolean[] visit;
     static int[] arr;
-    static boolean[] check;
-
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -15,29 +17,27 @@ public class Main {
         N = Integer.parseInt(st.nextToken());
         M = Integer.parseInt(st.nextToken());
 
+        visit = new boolean[N];
         arr = new int[M];
-        check = new boolean[N];
-        Arrays.fill(check, false);
-
-        tracking(0);
-
+        dfs(0);
+        System.out.println(sb);
     }
 
-    static void tracking(int depth) {
+    private static void dfs(int depth) {
         if (depth == M) {
-            for(int val: arr) {
-                System.out.print(val + " ");
+            for (int val : arr) {
+                sb.append(val).append(" ");
             }
-            System.out.println();
+            sb.append("\n");
             return;
         }
 
         for (int i = 0; i < N; i++) {
-            if (!check[i]) {
-                check[i] = true;
-                arr[depth] = i+1;
-                tracking(depth + 1);
-                check[i] = false;
+            if (!visit[i]) {
+                visit[i] = true;
+                arr[depth] = i + 1;
+                dfs(depth + 1);
+                visit[i] = false;
             }
         }
     }
