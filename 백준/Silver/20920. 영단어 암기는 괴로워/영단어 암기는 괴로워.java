@@ -1,4 +1,3 @@
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -16,37 +15,32 @@ public class Main {
 
         int N = Integer.parseInt(st.nextToken());
         int M = Integer.parseInt(st.nextToken());
-
-        Map<String, Integer> note = new HashMap<>();
+        Map<String, Integer> map = new HashMap<>();
 
         for (int i = 0; i < N; i++) {
-            String word = br.readLine();
-            if (word.length() >= M)
-                note.put(word, note.getOrDefault(word, 0) + 1);
+            String key = br.readLine();
+            if (key.length() >= M)
+                map.put(key, map.getOrDefault(key, 0) + 1);
         }
 
-        List<String> words = new ArrayList<>(note.keySet());
-        
-        words.sort(new Comparator<String>() {
+        List<String> sortKeys = new ArrayList<>(map.keySet());
+
+        sortKeys.sort(new Comparator<String>() {
             @Override
-            public int compare(String o1, String o2) {
-                // 1. 자주 등장 단어 순 정렬
-                if (Integer.compare(note.get(o1), note.get(o2)) != 0) {
-                    return Integer.compare(note.get(o2), note.get(o1));
+            public int compare(String s1, String s2) {
+                if (map.get(s1) != map.get(s2))
+                    return map.get(s2) - map.get(s1);
+                if (s1.length() != s2.length()) {
+                    return s2.length() - s1.length();
                 }
-                // 2. 길이가 긴 단어가 먼저 오도록 정렬
-                if (o1.length() != o2.length()) {
-                    return o2.length() - o1.length();
-                }
-                // 3. 사전 순으로 정렬
-                return o1.compareTo(o2);
+                return s1.compareTo(s2);
             }
         });
 
         StringBuilder sb = new StringBuilder();
-        for (String str : words) {
-            sb.append(str).append("\n");
+        for (String key : sortKeys) {
+            sb.append(key).append("\n");
         }
-        System.out.println(sb);
+        System.out.print(sb);
     }
 }
