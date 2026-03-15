@@ -1,44 +1,41 @@
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
 
-class Main {
-    static int K, N;
-    static int[] arr;
-
+public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
-        K = Integer.parseInt(st.nextToken());
-        N = Integer.parseInt(st.nextToken());
-        
-        arr = new int[K];
-        int max = 0;
-        int min = 0;
-        int mid = 0;
+
+        int K = Integer.parseInt(st.nextToken());
+        int N = Integer.parseInt(st.nextToken());
+
+        int[] lantern = new int[K];
+
+        long left = 1;
+        long right = 1;
+
         for (int i = 0; i < K; i++) {
-            arr[i] = Integer.parseInt(br.readLine());
+            lantern[i] = Integer.parseInt(br.readLine());
+            right = Math.max(right, lantern[i]);
         }
-        
-        Arrays.sort(arr);
- 
-       long right = arr[K-1];
-       long left = 1;
-       long count, half;
- 
-       while(left <= right) {
-          count = 0;
-          half = (left + right)/2;
- 
-          for(int i = 0; i < K; i++) 
-              count += arr[i] / half;
- 
-          if(count < N) 
-              right = half - 1;
-          else 
-              left = half + 1;
-       }
- 
-       System.out.println(right);
-        
+
+        // left가 right를 넘어서기 전까지 반복
+        while (left <= right) {
+            long mid = (left + right) / 2;
+            long count = 0;
+
+            for (int i = 0; i < K; i++) {
+                count += lantern[i] / mid;
+            }
+
+            if (count >= N) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+        System.out.println(right);
     }
 }
