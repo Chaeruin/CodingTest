@@ -1,25 +1,22 @@
-import java.util.*;
 import java.io.*;
+import java.util.*;
+
 
 public class Main {
-    public static void main (String[] args) throws IOException {
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int N = Integer.parseInt(br.readLine());
-    
-        PriorityQueue<Integer> intCount = new PriorityQueue<>(Collections.reverseOrder());
+
+        PriorityQueue<Integer> heap = new PriorityQueue<>(Collections.reverseOrder());
 
         for (int i = 0; i < N; i++) {
-            int n = Integer.parseInt(br.readLine());
-            if (n == 0 && intCount.size() == 0) {
-                System.out.println(0);
-            } 
-            else if (n == 0 && intCount.size() != 0) {
-                System.out.println(intCount.poll());
-            } 
-            else {
-                intCount.add(n);
+            int input = Integer.parseInt(br.readLine());
+            if (input == 0) {
+                if (heap.isEmpty()) System.out.println(0);
+                else System.out.println(heap.poll());
             }
-            
+            else heap.offer(input);
         }
+
     }
 }
