@@ -1,11 +1,7 @@
-
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.IOException;
-import java.util.StringTokenizer;
+import java.io.*;
+import java.util.*;
 
 public class Main {
-
     public static int maxValue = Integer.MIN_VALUE;
     public static int minValue = Integer.MAX_VALUE;
     public static int[] operator = new int[4];
@@ -16,7 +12,7 @@ public class Main {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        N = Integer.parseInt(br.readLine()); 
+        N = Integer.parseInt(br.readLine());
         number = new int[N];
 
         StringTokenizer st = new StringTokenizer(br.readLine(), " ");
@@ -28,13 +24,13 @@ public class Main {
         for (int i = 0; i < 4; i++) {
             operator[i] = Integer.parseInt(st.nextToken());
         }
-        br.close();
+
+        // 입력 끝
 
         solution(number[0], 1);
 
         System.out.println(maxValue);
         System.out.println(minValue);
-
     }
 
     public static void solution(int num, int index) {
@@ -50,20 +46,19 @@ public class Main {
                 operator[i]--;
 
                 switch (i) {
-                    case 0: 
+                    case 0:
                         solution(num + number[index], index + 1);
                         break;
-                    case 1: 
+                    case 1:
                         solution(num - number[index], index + 1);
                         break;
-                    case 2: 
+                    case 2:
                         solution(num * number[index], index + 1);
                         break;
-                    case 3: 
+                    case 3:
                         solution(num / number[index], index + 1);
                         break;
                 }
-                // 재귀호출이 종료되면 다시 해당 연산자 개수를 복구
                 operator[i]++;
             }
         }
