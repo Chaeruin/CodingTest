@@ -1,11 +1,10 @@
-
-import java.util.*;
 import java.io.*;
+import java.util.*;
 
 public class Main {
-
-    static int N, K;
     static boolean[] visit;
+    static int N, K;
+    static int result = 0;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -15,35 +14,32 @@ public class Main {
         K = Integer.parseInt(st.nextToken());
         visit = new boolean[100001];
 
-        bfs();
+        bfs(N, K);
+
+        System.out.println(result);
+
     }
 
-    static void bfs() {
-        Queue<int[]> q = new LinkedList<>();
-        q.add(new int[] {N, 0});
-        visit[N] = true;
+    public static void bfs(int start, int target) {
+        Queue<int[]> queue = new LinkedList<>();
+        queue.add(new int[] {start, 0});
+        visit[start] = true;
 
-        while(!q.isEmpty()){
-            int p[] = q.poll();
-            if(p[0] == K){
-                System.out.println(p[1]);
+        while (!queue.isEmpty()) {
+            int[] cur = queue.poll();
+            int pos = cur[0];
+            int count = cur[1];
+
+            if (pos == target) {
+                result = count;
                 return;
             }
-            for(int i = 0; i < 3; i++){
-                int next;
-                if(i == 0) {
-                    next = p[0] - 1;
-                }
-                else if(i == 1){
-                    next = p[0] + 1;
-                }
-                else {
-                    next = p[0] * 2;
-                }
 
-                if(0 <= next && next <= 100000 && !visit[next]){
-                    q.add(new int[] {next, p[1] + 1});
-                    visit[next] = true;
+            int[] direction = {pos + 1, pos - 1, pos * 2};
+            for (int d : direction) {
+                if (d >= 0 && d < 100001 && !visit[d]) {
+                    queue.add(new int[] {d, count + 1});
+                    visit[d] = true;
                 }
             }
         }
