@@ -1,85 +1,64 @@
-import java.util.*;
 import java.io.*;
+import java.util.*;
 
 public class Main {
-
-    static int N, M;
+    static int M, N;
     static int[][] tomato;
-    static int[] dx = new int[]{0, 0, -1, 1};
-    static int[] dy = new int[]{-1, 1, 0, 0};
-    static boolean[][] visited;
+    static boolean[][] visit;
+    static int[] dx = {0, 0, -1, 1};
+    static int[] dy = {-1, 1, 0, 0};
+    static Queue<int[]> queue = new LinkedList<>();
 
-    public static void main(String[] args) throws NumberFormatException, IOException {
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st;
+        StringTokenizer st = new StringTokenizer(br.readLine());
 
-        st = new StringTokenizer(br.readLine());
-
-        N = Integer.parseInt(st.nextToken());
         M = Integer.parseInt(st.nextToken());
+        N = Integer.parseInt(st.nextToken());
 
-        tomato = new int[M][N];
-        visited = new boolean[M][N];
+        tomato = new int[N][M];
 
-        for (int i = 0; i < M; i++) {
+        for (int i = 0; i < N; i++) {
             st = new StringTokenizer(br.readLine());
-            for (int j = 0; j < N; j++) {
+            for (int j = 0; j < M; j++) {
                 tomato[i][j] = Integer.parseInt(st.nextToken());
+                if (tomato[i][j] == 1) queue.add(new int[] {i, j, 0});
             }
         }
 
-        int answer = bfs();
-
-        // 모든 토마토가 익었는지 확인
-        for (int i = 0; i < M; i++) {
-            for (int j = 0; j < N; j++) {
-                if (tomato[i][j] == 0) {
-                    answer = -1; // 익지 않은 토마토가 있으면 -1 반환
-                }
-            }
-        }
-
-        System.out.println(answer);
-
+        bfs();
     }
 
-    public static int bfs() {
-        Queue<int[]> queue = new LinkedList<>();
-
-        // 익은 토마토들 모두 큐에 추가
-        for (int i = 0; i < M; i++) {
-            for (int j = 0; j < N; j++) {
-                if (tomato[i][j] == 1) {
-                    queue.add(new int[]{i, j});
-                    visited[i][j] = true;
-                }
-            }
-        }
-
-        int cnt = -1;
+    public static void bfs() {
+        int day = 0;
 
         while (!queue.isEmpty()) {
-            int size = queue.size();
-            cnt++;
-    
-            for (int s = 0; s < size; s++) {
-                int[] current = queue.poll();
-                int x = current[0];
-                int y = current[1];
-    
-                for (int i = 0; i < 4; i++) {
-                    int nx = x + dx[i];
-                    int ny = y + dy[i];
-    
-                    if (nx >= 0 && ny >= 0 && nx < M && ny < N && !visited[nx][ny] && tomato[nx][ny] == 0) {
-                        queue.add(new int[]{nx, ny});
-                        visited[nx][ny] = true;
+            int[] t = queue.poll();
+            day = t[2];
+
+            for (int i = 0; i < 4; i++) {
+                int nx = t[0] + dx[i];
+                int ny = t[1] + dy[i];
+
+                if (nx >= 0 && nx < N && ny >= 0 && ny < M) {
+                    if (tomato[nx][ny] == 0) {
                         tomato[nx][ny] = 1;
+                        queue.add(new int[] {nx, ny, day + 1});
                     }
                 }
             }
         }
 
-        return cnt;
+        if (checkTomato()) System.out.println(day);
+        else System.out.println(-1);
+    }
+
+    public static boolean checkTomato() {
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < M; j++) {
+                if (tomato[i][j] == 0) return false;
+            }
+        }
+        return true;
     }
 }
