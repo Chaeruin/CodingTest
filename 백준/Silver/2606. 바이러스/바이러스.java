@@ -1,58 +1,63 @@
-
-import java.util.*;
 import java.io.*;
+import java.util.*;
 
 public class Main {
-
-    static int N;
-    static int count;
-    static boolean[] visited;
-    static List[] arr;
-
+    static int N, M;
+    static boolean[][] graph;
+    static boolean[] visit;
+    static int count = 0;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         N = Integer.parseInt(br.readLine());
-        int M = Integer.parseInt(br.readLine());
+        M = Integer.parseInt(br.readLine());
 
-        arr = new List[N+1];
-        visited = new boolean[N+1];
+        graph = new boolean[N + 1][N + 1];
+        visit = new boolean[N + 1];
 
         StringTokenizer st;
-
-        for (int i = 1; i <= N; i++) {
-            arr[i] = new ArrayList<Integer>();
-        }
-
         for (int i = 0; i < M; i++) {
             st = new StringTokenizer(br.readLine());
-            int start = Integer.parseInt(st.nextToken());
-            int end = Integer.parseInt(st.nextToken());
-            arr[start].add(end);
-            arr[end].add(start);
+            int x = Integer.parseInt(st.nextToken());
+            int y = Integer.parseInt(st.nextToken());
+            graph[x][y] = graph[y][x] = true;
         }
 
-        count = 0;
         bfs(1);
-        System.out.println(count-1);
-        br.close();
+
+        System.out.println(count);
+
     }
 
-    static void bfs(int start) {
-        Queue queue = new LinkedList<Integer>();
-        queue.add(start);
+    public static void dfs(int v) {
+        visit[v] = true;
 
-        while(!queue.isEmpty()) {
-            int now = (int) queue.poll();
-            if (!visited[now]) {
+        if (v == graph.length) {
+            return;
+        }
+        for (int i = 1; i < graph.length; i++) {
+            if (graph[v][i] && !visit[i]) {
+                dfs(i);
                 count++;
-                visited[now] = true;
-                for (int i = 0; i < arr[now].size(); i++) {
-                    queue.add(arr[now].get(i));
-                }
             }
         }
     }
 
+    public static void bfs(int v) {
+        Queue<Integer> queue = new LinkedList<>();
+        queue.add(v);
+        visit[v] = true;
+
+        while (!queue.isEmpty()) {
+            int tmp = queue.poll();
+            for (int i = 1; i < graph.length; i++) {
+                if (graph[tmp][i] && !visit[i]) {
+                    queue.add(i);
+                    visit[i] = true;
+                    count++;
+                }
+            }
+        }
+    }
 }
