@@ -1,64 +1,52 @@
-import java.util.*;
 import java.io.*;
+import java.util.*;
 
 public class Main {
-    
-    static boolean[][] visited;
-    static int[][] maze;
-    static int[] dx = new int[]{0, 0, -1, 1};
-    static int[] dy = new int[]{-1, 1, 0, 0};
+    static int[][] map;
     static int N, M;
+    static boolean[][] visit;
+    static int count = 0;
+    static int[] dx = {0, 0, -1, 1};
+    static int[] dy = {-1, 1, 0, 0};
 
     public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in)); 
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
 
-        String[] NM = br.readLine().split(" ");
-        N = Integer.parseInt(NM[0]);
-        M = Integer.parseInt(NM[1]);
+        N = Integer.parseInt(st.nextToken());
+        M = Integer.parseInt(st.nextToken());
 
-        maze = new int[N][M];
-        visited = new boolean[N][M];
+        map = new int[N][M];
+        visit = new boolean[N][M];
 
         for (int i = 0; i < N; i++) {
-            String[] mazeStrings = br.readLine().split("");
+            String s = br.readLine();
             for (int j = 0; j < M; j++) {
-                maze[i][j] = Integer.parseInt(mazeStrings[j]);
+                map[i][j] = s.charAt(j) - '0';
             }
         }
 
-        int answer = bfs(N, M);
-        System.out.println(answer);
+        bfs(0, 0);
 
+        System.out.println(map[N - 1][M - 1]);
     }
 
-    public static int bfs(int n, int m) {
+    public static void bfs(int x, int y) {
         Queue<int[]> queue = new LinkedList<>();
-        queue.add(new int[] {0, 0});
-        maze[0][0] = 1; // 시작 지점에서의 거리
+        queue.add(new int[]{x, y});
+        visit[x][y] = true;
 
         while (!queue.isEmpty()) {
-            int[] current = queue.poll();
-            int x = current[0];
-            int y = current[1];
-            
-            // 목표 지점 도달 시 거리 반환
-            if (x == n - 1 && y == m - 1) {
-                return maze[x][y];
-            }
-            
-            // 네 방향 탐색
+            int[] tmp = queue.poll();
             for (int i = 0; i < 4; i++) {
-                int nx = x + dx[i];
-                int ny = y + dy[i];
-                
-                // 범위 내에 있고, 방문하지 않은 이동 가능한 칸이면
-                if (nx >= 0 && nx < n && ny >= 0 && ny < m && maze[nx][ny] == 1) {
-                    queue.add(new int[] {nx, ny});
-                    maze[nx][ny] = maze[x][y] + 1; // 이동 거리 업데이트
+                int nx = tmp[0] + dx[i];
+                int ny = tmp[1] + dy[i];
+                if (nx >= 0 && nx < N && ny >= 0 && ny < M && map[nx][ny] > 0 && !visit[nx][ny]) {
+                    queue.add(new int[]{nx, ny});
+                    visit[nx][ny] = true;
+                    map[nx][ny] = map[tmp[0]][tmp[1]] + 1;
                 }
             }
         }
-        
-        return -1;
     }
 }
