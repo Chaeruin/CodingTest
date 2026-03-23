@@ -1,29 +1,23 @@
-
 import java.io.*;
-import java.util.*;
 
 public class Main {
-
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String[] str = br.readLine().split("-");
 
-        String[] inputs = br.readLine().split("-");
+        int result = 0;
 
-        int sum = 0;
-
-        for (int i = 0; i < inputs.length; i++) {
-            String[] inputStr = inputs[i].split("\\+");
-            int plusMinusSum = 0;
-            for (String s : inputStr) {
-                plusMinusSum += Integer.parseInt(s);
+        for (int i = 0; i < str.length; i++) {
+            int tmp = 0;
+            String[] add = str[i].split("\\+");
+            
+            for (int j = 0; j < add.length; j++) {
+                tmp += Integer.parseInt(add[j]);
             }
-            if (i == 0) {
-                sum += plusMinusSum;
-            } else {
-                sum -= plusMinusSum;
-            }
+            if (i == 0) result += tmp;
+            else result -= tmp;
         }
-
-        System.out.println(sum);
+        
+        System.out.println(result);
     }
 }
