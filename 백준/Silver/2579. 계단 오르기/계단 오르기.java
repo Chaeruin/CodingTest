@@ -1,39 +1,27 @@
-
-import java.util.*;
 import java.io.*;
+import java.util.*;
 
 public class Main {
-
-    static int N;
-    static int[] step;
-    static int[] dp;
-
+    static int[] stairs, dp;
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        N = Integer.parseInt(br.readLine());
-
-        step = new int[N + 1];
+        int N = Integer.parseInt(br.readLine());
+        stairs = new int[N + 1];
         dp = new int[N + 1];
 
         for (int i = 1; i <= N; i++) {
-            step[i] = Integer.parseInt(br.readLine());
+            stairs[i] = Integer.parseInt(br.readLine());
         }
 
-        dp[0] = 0;
+        dp[1] = stairs[1];
 
-        for (int i = 1; i <= N; i++) {
-            if (i == 1) {
-                dp[1] = step[1];
-            }
-            else if (i == 2) {
-                dp[2] = step[1] + step[2];
-            } else {
-                dp[i] = Math.max(dp[i - 2], dp[i - 3] + step[i - 1]) + step[i];
-            }
+        if (N > 1) dp[2] = stairs[1] + stairs[2];
+        if (N > 2) dp[3] = Math.max(stairs[1], stairs[2]) + stairs[3];
+        for (int i = 4; i <= N; i++) {
+            dp[i] = Math.max(dp[i - 3] + stairs[i - 1], dp[i - 2]) + stairs[i];
         }
-
+        
         System.out.println(dp[N]);
-
     }
 }
