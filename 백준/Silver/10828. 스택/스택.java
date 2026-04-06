@@ -1,57 +1,37 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.Stack;
+import java.io.*;
+import java.util.*;
 
 public class Main {
-    static String command;
-    static int commandInt;
-    public static void main(String[] args) throws NumberFormatException, IOException {
-        Stack<Integer> stack = new Stack<>();
-
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st;
+
         int N = Integer.parseInt(br.readLine());
-        
-        int i = 0;
+        Stack<Integer> stack = new Stack<>();
+        StringBuilder sb = new StringBuilder();
 
-        String[] st;
-
-        while (i < N) {
-            st = br.readLine().trim().split(" ");
-            command = st[0];
-
-
-            if (st.length == 2) {
-                commandInt = Integer.parseInt(st[1]);
-            }
+        for (int i = 0; i < N; i++) {
+            st = new StringTokenizer(br.readLine());
+            String command = st.nextToken();
 
             if (command.equals("push")) {
-                stack.push(commandInt);
-            } else if (command.equals("pop")) {
-                if (stack.size() == 0) {
-                    System.out.println(-1);
-                }
-                else {
-                    System.out.println(stack.peek());
-                    stack.pop();
-                }
-            } else if (command.equals("size")) {
-                System.out.println(stack.size());
-            } else if (command.equals("empty")) {
-                if (stack.size() == 0) {
-                    System.out.println(1);
-                } else {
-                    System.out.println(0);
-                }
-            } else if (command.equals("top")) {
-                if (stack.size() == 0) {
-                    System.out.println(-1);
-                }
-                else {
-                    System.out.println(stack.peek());
-                }
+                stack.push(Integer.parseInt(st.nextToken()));
             }
-            i++;
+            else if (command.equals("pop")) {
+                if (stack.isEmpty()) sb.append(-1).append("\n");
+                else sb.append(stack.pop()).append("\n");
+            }
+            else if (command.equals("size")) sb.append(stack.size()).append("\n");
+            else if (command.equals("empty")) {
+                if (stack.isEmpty()) sb.append(1).append("\n");
+                else sb.append(0).append("\n");
+            }
+            else if (command.equals("top")) {
+                if (stack.isEmpty()) sb.append(-1).append("\n");
+                else sb.append(stack.peek()).append("\n");
+            }
         }
+
+        System.out.print(sb);
     }
 }
