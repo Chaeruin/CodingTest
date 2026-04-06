@@ -2,9 +2,8 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    static boolean[] visit;
-    static int N, K;
-    static int result = 0;
+    static int N, K, count = 0;
+    static boolean[] visited;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -12,34 +11,35 @@ public class Main {
 
         N = Integer.parseInt(st.nextToken());
         K = Integer.parseInt(st.nextToken());
-        visit = new boolean[100001];
+
+        visited = new boolean[100_001];
 
         bfs(N, K);
 
-        System.out.println(result);
+        System.out.println(count);
 
     }
 
-    public static void bfs(int start, int target) {
+    static void bfs(int n, int k) {
         Queue<int[]> queue = new LinkedList<>();
-        queue.add(new int[] {start, 0});
-        visit[start] = true;
+        queue.add(new int[] {n, 0});
+        visited[n] = true;
 
         while (!queue.isEmpty()) {
             int[] cur = queue.poll();
             int pos = cur[0];
-            int count = cur[1];
+            int c = cur[1];
 
-            if (pos == target) {
-                result = count;
+            if (pos == k) {
+                count = c;
                 return;
             }
 
             int[] direction = {pos + 1, pos - 1, pos * 2};
             for (int d : direction) {
-                if (d >= 0 && d < 100001 && !visit[d]) {
-                    queue.add(new int[] {d, count + 1});
-                    visit[d] = true;
+                if (d >= 0 && d < 100001 && !visited[d]) {
+                    queue.add(new int[] {d, c + 1});
+                    visited[d] = true;
                 }
             }
         }
