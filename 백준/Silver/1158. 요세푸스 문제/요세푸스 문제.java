@@ -1,40 +1,35 @@
-import java.util.*;
 import java.io.*;
+import java.util.*;
 
-class Main {
-    static int N, K;
-    static List<Integer> arr;
-
+public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
-        N = Integer.parseInt(st.nextToken());
-        K = Integer.parseInt(st.nextToken());
-        
-        arr = new ArrayList<>();
-        
+
+        int N = Integer.parseInt(st.nextToken());
+        int K = Integer.parseInt(st.nextToken());
+        Queue<Integer> queue = new LinkedList<>();
+
         for (int i = 1; i <= N; i++) {
-            arr.add(i);
+            queue.add(i);
         }
- 
-        
+
         StringBuilder sb = new StringBuilder();
         sb.append("<");
-        
-        int idx = 0;
-        
-        while (arr.size() > 1) {
-            if (idx + K - 1 < arr.size()) {
-                idx = idx + K - 1;
-            } else {
-                idx = (idx + K - 1) % arr.size();
+
+        while(!queue.isEmpty()) {
+            for (int i = 0; i < K - 1; i++) {
+                queue.add(queue.remove());
             }
-            sb.append(arr.get(idx) + ", ");
-            arr.remove(idx);
+
+            int target = queue.remove();
+
+            if (queue.isEmpty()) sb.append(target);
+            else sb.append(target).append(", ");
         }
-        sb.append(arr.get(0) + ">");
-        
-        System.out.println(sb);
-        
+
+        sb.append(">");
+
+        System.out.print(sb);
     }
 }
