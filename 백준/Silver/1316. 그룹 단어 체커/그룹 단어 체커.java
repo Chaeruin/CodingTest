@@ -1,30 +1,28 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.StringTokenizer;
+import java.io.*;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        int num = Integer.parseInt(st.nextToken());
+        int N = Integer.parseInt(br.readLine());
 
-        int groupWords = num;
+        int count = 0;
 
-        for (int i = 0; i < num; i++) {
-            String word = br.readLine();
-            boolean[] isChecked = new boolean[26];
+        for (int i = 0; i < N; i++) {
+            String str = br.readLine();
+            boolean[] arr = new boolean[26];
 
-            for (int j = 0; j < word.length(); j++) {
-                if (!isChecked[word.charAt(j) - 'a']) {
-                    isChecked[word.charAt(j) - 'a'] = true;
-                } else if (j > 0 && word.charAt(j) != word.charAt(j - 1)) {
-                    groupWords--;
+            for (int j = 0; j < str.length(); j++) {
+                if (!arr[str.charAt(j) - 'a']) {
+                    arr[str.charAt(j) - 'a'] = true;
+                } else if (j > 0 && str.charAt(j) != str.charAt(j - 1)) {
+                    count++;
                     break;
                 }
             }
         }
-        
-        System.out.println(groupWords);
+
+        System.out.println(N - count);
+
     }
 }
