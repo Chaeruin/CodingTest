@@ -2,67 +2,71 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    static int[][] map;
-    static int count;
     static int N;
+    static boolean[][] arr;
+    static boolean[][] visited;
     static int[] dx = {0, 0, -1, 1};
     static int[] dy = {-1, 1, 0, 0};
-    static boolean[][] visit;
+    static int count;
+    static List<Integer> list = new ArrayList<>();
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
         N = Integer.parseInt(br.readLine());
-        map = new int[N][N];
-        visit = new boolean[N][N];
 
-        StringTokenizer st;
+        arr = new boolean[N][N];
+        visited = new boolean[N][N];
 
         for (int i = 0; i < N; i++) {
-            String str = br.readLine();
+            String input = br.readLine();
             for (int j = 0; j < N; j++) {
-                map[i][j] = str.charAt(j) - '0';
+                arr[i][j] = input.charAt(j) == '1';
+            }
+        }
+
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                if (arr[i][j] && !visited[i][j]) {
+                    bfs(i, j);
+                }
             }
         }
 
         StringBuilder sb = new StringBuilder();
 
-        int num = 0;
-        List<Integer> counts = new ArrayList<>();
+        list.sort(Comparator.naturalOrder());
 
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < N; j++) {
-                if (map[i][j] == 1 && !visit[i][j]) {
-                    count = 0;
-                    dfs(i, j);
-                    counts.add(count);
-                    num++;
-                }
-            }
-        }
-
-        sb.append(num).append("\n");
-
-        counts.sort(Comparator.naturalOrder());
-
-        for (int c : counts) {
-            sb.append(c).append("\n");
+        sb.append(list.size()).append("\n");
+        for (int l : list) {
+            sb.append(l).append("\n");
         }
 
         System.out.print(sb);
     }
 
-    public static void dfs(int x, int y) {
-        visit[x][y] = true;
-        count++;
+    static void bfs(int i, int j) {
+        Queue<int[]> queue = new LinkedList<>();
+        queue.add(new int[]{i, j});
+        visited[i][j] = true;
+        count = 1;
 
-        for (int i = 0; i < 4; i++) {
-            int nx = x + dx[i];
-            int ny = y + dy[i];
-            if (nx >= 0 && nx < N && ny >= 0 && ny < N && map[nx][ny] == 1 && !visit[nx][ny]) {
-                dfs(nx, ny);
+        while (!queue.isEmpty()) {
+            int[] tmp = queue.poll();
+            int x = tmp[0];
+            int y = tmp[1];
+
+            for (int k = 0; k < 4; k++) {
+                int nx = x + dx[k];
+                int ny = y + dy[k];
+
+                if (nx >= 0 && nx < N && ny >= 0 && ny < N && arr[nx][ny] && !visited[nx][ny]) {
+                    queue.add(new int[]{nx, ny});
+                    visited[nx][ny] = true;
+                    count++;
+                }
             }
         }
 
+        list.add(count);
     }
 }
