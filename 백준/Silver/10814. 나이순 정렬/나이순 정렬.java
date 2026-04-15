@@ -1,50 +1,50 @@
+import java.io.*;
+import java.util.*;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.StringTokenizer;
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        int N = Integer.parseInt(br.readLine());
+        List<Member> list = new ArrayList<>();
+        StringTokenizer st;
+
+        for (int i = 0; i < N; i++){
+            st = new StringTokenizer(br.readLine());
+            int age = Integer.parseInt(st.nextToken());
+            String name = st.nextToken();
+            list.add(new Member(age, name));
+        }
+
+        Collections.sort(list, (Member member1, Member member2) -> {
+            for (int i = 0; i < list.size() - 1; i++){
+                if (member1.age == member2.age){
+                    return member1.index - member2.index;
+                }
+            }
+            return member1.age - member2.age;
+        });
+
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < list.size(); i++){
+            sb.append(list.get(i).age).append(" ").append(list.get(i).name).append("\n");
+        }
+
+        System.out.println(sb);
+    }
+}
 
 class Member {
+    int index = 0;
     int age;
     String name;
 
-    public Member(int a, String n){
-        age = a;
-        name = n;
+    public Member () {}
+
+    public Member (int age, String name) {
+        this.age = age;
+        this.name = name;
+        this.index++;
     }
 }
-
-public class Main{
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-
-        int N = Integer.parseInt(br.readLine());
-
-        Member[] arr = new Member[N];
-
-        for(int i = 0; i < N; i++){
-            StringTokenizer st = new StringTokenizer(br.readLine());
-            Member m = new Member(Integer.parseInt(st.nextToken()), st.nextToken());
-            arr[i] = m;
-        }
-
-        Arrays.sort(arr, new Comparator<Member>() {
-            public int compare(Member m1, Member m2){
-                return m1.age - m2.age;
-            }
-        } );
-
-        for(int i = 0; i < N; i++){
-            bw.write(arr[i].age+" "+arr[i].name+"\n");
-        }
-
-        bw.flush();
-        bw.close();
-    }
-}
-
