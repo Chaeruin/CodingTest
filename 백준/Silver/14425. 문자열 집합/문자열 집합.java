@@ -1,12 +1,5 @@
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.StringTokenizer;
+import java.io.*;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) throws IOException {
@@ -16,21 +9,21 @@ public class Main {
         int N = Integer.parseInt(st.nextToken());
         int M = Integer.parseInt(st.nextToken());
 
-        Set<String> set = new HashSet<>();
-        List<String> list = new ArrayList<>();
-
+        Set<String> setOne = new HashSet<>();
         for (int i = 0; i < N; i++) {
-            set.add(br.readLine());
+            setOne.add(br.readLine());
         }
 
+        List<String> setTwo = new ArrayList<>();
         for (int i = 0; i < M; i++) {
-            list.add(br.readLine());
+            setTwo.add(br.readLine());
         }
 
         int count = 0;
-
-        for (String l : list) {
-            if (set.contains(l)) count++;
+        for (String str : setTwo) {
+            if (setOne.contains(str)) {
+                count++;
+            }
         }
 
         System.out.println(count);
