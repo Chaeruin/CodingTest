@@ -1,44 +1,32 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.StringTokenizer;
+import java.io.*;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         int N = Integer.parseInt(br.readLine());
-
         Map<Integer, Integer> map = new HashMap<>();
-
         StringTokenizer st = new StringTokenizer(br.readLine());
         for (int i = 0; i < N; i++) {
-            int token = Integer.parseInt(st.nextToken());
-
-            if (map.containsKey(token)) {
-                map.put(token, map.get(token) + 1);
-            } else {
-                map.put(token, 1);
-            }
+            int key = Integer.parseInt(st.nextToken());
+            map.put(key, map.getOrDefault(key, 0) + 1);
         }
 
         int M = Integer.parseInt(br.readLine());
+        List<Integer> list = new ArrayList<>();
         st = new StringTokenizer(br.readLine());
+        for (int i = 0; i < M; i++) {
+            list.add(Integer.parseInt(st.nextToken()));
+        }
 
         StringBuilder sb = new StringBuilder();
 
-        for (int i = 0; i < M; i++) {
-            int token = Integer.parseInt(st.nextToken());
-
-            if(map.containsKey(token)) {
-                sb.append(map.get(token)).append(" ");
-            } else {
-                sb.append(0).append(" ");
-            }
+        for (int key : list) {
+            int value = map.getOrDefault(key, 0);
+            sb.append(value).append(" ");
         }
 
-        System.out.print(sb);
+        System.out.println(sb);
     }
 }
