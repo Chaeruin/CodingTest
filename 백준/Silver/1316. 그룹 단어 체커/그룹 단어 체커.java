@@ -5,24 +5,20 @@ public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int N = Integer.parseInt(br.readLine());
-
-        int count = 0;
-
+        int notGroupCount = 0;
         for (int i = 0; i < N; i++) {
-            String str = br.readLine();
+            String input = br.readLine();
             boolean[] arr = new boolean[26];
 
-            for (int j = 0; j < str.length(); j++) {
-                if (!arr[str.charAt(j) - 'a']) {
-                    arr[str.charAt(j) - 'a'] = true;
-                } else if (j > 0 && str.charAt(j) != str.charAt(j - 1)) {
-                    count++;
+            for (int j = 0; j < input.length(); j++) {
+                if (!arr[input.charAt(j) - 'a']) {
+                    arr[input.charAt(j) - 'a'] = true;
+                } else if (j > 0 && input.charAt(j) != input.charAt(j - 1)) {
+                    notGroupCount++;
                     break;
                 }
             }
         }
-
-        System.out.println(N - count);
-
+        System.out.println(N - notGroupCount);
     }
 }
