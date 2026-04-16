@@ -1,45 +1,42 @@
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.Stack;
+
+import java.io.*;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        String input;
         StringBuilder sb = new StringBuilder();
+        while (!(input = br.readLine()).equals(".")) {
+            Stack<String> stack = new Stack<>();
+            String[] inputArr = input.split("");
+            boolean isError = false; 
 
-        while(true) {
-            String input = br.readLine();
-            Stack<Character> stack = new Stack<>();
-
-            if(input.equals(".")) break;
-
-            for(int i = 0; i < input.length(); i++) {
-                char ch = input.charAt(i);
-
-                if(ch == '(' || ch == '[') stack.push(ch);
-
-                //닫는 괄호일때 각 조건
-                if(ch == ')') {
-                    if(stack.empty()) {
-                        stack.push(ch);
+            for (int i = 0; i < inputArr.length; i++) {
+                if (inputArr[i].equals("(") || inputArr[i].equals("[")) {
+                    stack.push(inputArr[i]);
+                }
+                else if (inputArr[i].equals(")")) {
+                    if (stack.isEmpty() || !stack.peek().equals("(")) {
+                        isError = true;
                         break;
+                    } else {
+                        stack.pop();
                     }
-                    if(stack.peek() == '(') stack.pop();
-                    else break;
-
-                } else if(ch == ']') {
-                    if(stack.empty()) {
-                        stack.push(ch);
+                }
+                else if (inputArr[i].equals("]")) { 
+                    if (stack.isEmpty() || !stack.peek().equals("[")) {
+                        isError = true;
                         break;
+                    } else {
+                        stack.pop();
                     }
-                    if(stack.peek() == '[') stack.pop();
-                    else break;
                 }
             }
 
-            if(stack.isEmpty()) sb.append("yes").append("\n");
+            if (!isError && stack.isEmpty()) sb.append("yes").append("\n");
             else sb.append("no").append("\n");
         }
 
