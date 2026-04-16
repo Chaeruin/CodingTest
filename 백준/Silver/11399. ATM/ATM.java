@@ -1,4 +1,3 @@
-
 import java.io.*;
 import java.util.*;
 
@@ -17,13 +16,9 @@ public class Main {
         Arrays.sort(arr);
 
         int sum = 0;
-
         for (int i = 0; i < N; i++) {
-            for (int j = 0; j <= i; j++) {
-                sum += arr[j];
-            }
+            sum += (N - i) * arr[i];
         }
-
         System.out.println(sum);
     }
 }
