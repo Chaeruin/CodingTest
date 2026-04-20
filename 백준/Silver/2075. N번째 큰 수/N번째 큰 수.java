@@ -1,28 +1,24 @@
-import java.util.*;
 import java.io.*;
-
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        
-        int N = Integer.parseInt(st.nextToken());
 
+        int N = Integer.parseInt(br.readLine());
 
-        int[] intCount = new int[N*N];
-        int pos = 0;
+        StringTokenizer st;
+        List<Integer> list = new ArrayList<>();
 
         for (int i = 0; i < N; i++) {
             st = new StringTokenizer(br.readLine());
             for (int j = 0; j < N; j++) {
-                intCount[pos] = Integer.parseInt(st.nextToken());
-                pos++;
+                list.add(Integer.parseInt(st.nextToken()));
             }
         }
 
-        Arrays.sort(intCount);
+        list.sort(Comparator.reverseOrder());
 
-        System.out.println(intCount[N*N - N]);
+        System.out.println(list.get(N - 1));
     }
-}   
+}
