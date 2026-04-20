@@ -1,9 +1,10 @@
+
 import java.io.*;
 import java.util.*;
 
 public class Main {
     static int N, M, V;
-    static int[][] graph;
+    static boolean[][] graph;
     static boolean[] visited;
     static StringBuilder sb = new StringBuilder();
 
@@ -15,13 +16,13 @@ public class Main {
         M = Integer.parseInt(st.nextToken());
         V = Integer.parseInt(st.nextToken());
 
-        graph = new int[N + 1][N + 1];
+        graph = new boolean[N + 1][N + 1];
 
         for (int i = 0; i < M; i++) {
             st = new StringTokenizer(br.readLine());
             int x = Integer.parseInt(st.nextToken());
             int y = Integer.parseInt(st.nextToken());
-            graph[x][y] = graph[y][x] = 1;
+            graph[x][y] = graph[y][x] = true;
         }
 
         visited = new boolean[N + 1];
@@ -29,33 +30,35 @@ public class Main {
         sb.append("\n");
         visited = new boolean[N + 1];
         bfs(V);
+
         System.out.println(sb);
     }
 
-    static void dfs(int x) {
-        visited[x] = true;
-        sb.append(x).append(" ");
+    static void dfs(int v) {
+        sb.append(v).append(" ");
+        visited[v] = true;
 
         for (int i = 1; i <= N; i++) {
-            if (!visited[i] && graph[x][i] == 1) {
+            if (graph[v][i] && !visited[i]) {
                 dfs(i);
             }
         }
     }
 
-    static void bfs(int x) {
+    static void bfs(int v) {
         Queue<Integer> queue = new LinkedList<>();
-        queue.add(x);
-        visited[x] = true;
-        sb.append(x).append(" ");
+        queue.add(v);
+        sb.append(v).append(" ");
+        visited[v] = true;
 
         while (!queue.isEmpty()) {
-            int tmp = queue.poll();
-            for (int i = 1; i < graph.length; i++) {
-                if (graph[tmp][i] == 1 && !visited[i]) {
+            int x = queue.poll();
+
+            for (int i = 1; i <= N; i++) {
+                if (graph[x][i] && !visited[i]) {
+                    sb.append(i).append(" ");
                     queue.add(i);
                     visited[i] = true;
-                    sb.append(i).append(" ");
                 }
             }
         }
