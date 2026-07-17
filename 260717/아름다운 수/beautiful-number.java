@@ -4,12 +4,10 @@ import java.util.*;
 public class Main {
 
     public static int N, answer = 0;
-    public static int[] selected;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         N = Integer.parseInt(br.readLine());
-        selected = new int[N];
 
         dfs(0);
 
