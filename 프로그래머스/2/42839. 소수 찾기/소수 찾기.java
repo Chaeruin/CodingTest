@@ -1,45 +1,48 @@
 import java.util.*;
+import java.io.*;
+
 class Solution {
-    public int solution(String number) {
-        int answer = 0;
+    
+    public Set<Integer> set = new HashSet<>();
+    public String[] numb;
+    public boolean[] visited;
+    
+    public int solution(String numbers) {
+        numb = numbers.split("");
+        visited = new boolean[numb.length];
         
-        String[] numbers = number.split("");
-        boolean[] visited = new boolean[numbers.length];
+        dfs("");
         
-        Set<Integer> numberPerm = new HashSet<>();
-        
-        for (int i = 1; i <= numbers.length; i++) {
-            perm(numbers, "", visited, 0, i, numberPerm);
-        }
-        
-        for (int num: numberPerm) {
-            if (isPrime(num)) {
-                answer++;
-            }
-        }
-        
-        return answer;
+        return set.size();
     }
     
-    void perm(String[] numbers, String current, boolean[] visited, int depth, int r, Set<Integer> numberPerm) {
-        if (depth == r) {
-            numberPerm.add(Integer.parseInt(current));
+    public void dfs(String str) {
+        if (str.length() > numb.length) {
             return;
         }
-        for (int i = 0; i < numbers.length; i++) {
-            if (!visited[i]) {
-                visited[i] = true;
-                perm(numbers, current + numbers[i], visited, depth + 1, r, numberPerm);
-                visited[i] = false;
-            }
+        
+        for (int i = 0; i < numb.length; i++) {
+            if (visited[i]) continue;
+            
+            String temp = str + numb[i];
+            int changeNum = Integer.parseInt(temp);
+            
+            if (isPrime(changeNum)) {
+                set.add(changeNum);
+                System.out.println("판별후 : " + temp);
+            } 
+            visited[i] = true;
+            dfs(temp);
+            visited[i] = false;
         }
+        
     }
     
     public boolean isPrime(int n) {
-        if (n <= 1) return false;			
-        for (int i = 2; i  <= Math.sqrt(n); i++) {		
-            if (n % i == 0) return false;		
+        if (n <= 1) return false;
+        for (int i = 2; i <= Math.sqrt(n); i++) {		
+            if (n % i == 0) return false;
         }
-        return true;			
+        return true;
     }
 }
