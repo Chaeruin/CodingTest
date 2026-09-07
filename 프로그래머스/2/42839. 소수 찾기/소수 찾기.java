@@ -1,5 +1,4 @@
 import java.util.*;
-import java.io.*;
 
 class Solution {
     
@@ -29,8 +28,9 @@ class Solution {
             
             if (isPrime(changeNum)) {
                 set.add(changeNum);
-                System.out.println("판별후 : " + temp);
+                // System.out.println("판별후 : " + temp);
             } 
+            
             visited[i] = true;
             dfs(temp);
             visited[i] = false;
@@ -38,11 +38,15 @@ class Solution {
         
     }
     
-    public boolean isPrime(int n) {
-        if (n <= 1) return false;
-        for (int i = 2; i <= Math.sqrt(n); i++) {		
-            if (n % i == 0) return false;
+    public boolean isPrime(int number) {
+        if (number == 2) return true;
+        
+        if (number <= 1 || number % 2 == 0) return false;
+        
+        for (int i = 3; i <= Math.sqrt(number); i += 2) {
+            if (number % i == 0) return false;
         }
+        
         return true;
     }
 }
