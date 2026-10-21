@@ -1,28 +1,24 @@
-import java.util.PriorityQueue;
+import java.util.*;
 
 class Solution {
     public int solution(int[] scoville, int K) {
-        int answer = 0;
-        
         PriorityQueue<Integer> scvQueue = new PriorityQueue<>();
         
-        for (int scv : scoville) {
-            scvQueue.offer(scv);
+        for (int s : scoville) {
+            scvQueue.add(s);
         }
         
-        while (scvQueue.peek() < K) {
-            if (scvQueue.size() < 2) {
-                return -1;
-            }
-            
-            int leastSpicy = scvQueue.poll();
-            int secondLeastSpicy = scvQueue.poll();
-            
-            int newScoville = leastSpicy + (secondLeastSpicy * 2);
-            scvQueue.offer(newScoville);
-            
+        int answer = 0;
+        
+        while (scvQueue.size() > 1 && scvQueue.peek() < K) {
+            int first = scvQueue.poll();
+            int second = scvQueue.poll();
+            int mix = first + second * 2;
+            scvQueue.add(mix);
             answer++;
         }
+        
+        if (scvQueue.peek() < K) return -1;
         
         return answer;
     }
