@@ -1,10 +1,10 @@
 # [level 2] 입양 시각 구하기(1) - 59412 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/59412?language=mysql) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/59412) 
 
 ### 성능 요약
 
-메모리: 0.0 MB, 시간: 0.00 ms
+메모리: undefined, 시간: 
 
 ### 구분
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2026년 04월 08일 13:11:07
+2026년 11월 04일 16:55:46
 
 ### 문제 설명
 
