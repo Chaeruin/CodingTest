@@ -1,10 +1,10 @@
 # [level 1] 이름이 없는 동물의 아이디 - 59039 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/59039?language=mysql) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/59039) 
 
 ### 성능 요약
 
-메모리: 0.0 MB, 시간: 0.00 ms
+메모리: undefined, 시간: 
 
 ### 구분
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2026년 04월 07일 06:37:03
+2026년 11월 04일 17:14:41
 
 ### 문제 설명
 
