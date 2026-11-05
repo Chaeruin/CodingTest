@@ -1,10 +1,10 @@
 # [level 2] 상품 별 오프라인 매출 구하기 - 131533 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/131533?language=mysql) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/131533) 
 
 ### 성능 요약
 
-메모리: 0.0 MB, 시간: 0.00 ms
+메모리: undefined, 시간: 
 
 ### 구분
 
@@ -12,11 +12,11 @@
 
 ### 채점결과
 
-Empty
+합계: 100.0 / 100.0
 
 ### 제출 일자
 
-2025년 02월 13일 19:08:24
+2026년 11월 05일 09:07:09
 
 ### 문제 설명
 
