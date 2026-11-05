@@ -1,7 +1,8 @@
 -- 코드를 입력하세요
-SELECT a.APNT_NO, p.PT_NAME, p.PT_NO, d.MCDP_CD, d.DR_NAME, a.APNT_YMD
+SELECT a.APNT_NO, p.PT_NAME, p.PT_NO, a.MCDP_CD, d.DR_NAME, a.APNT_YMD
 FROM APPOINTMENT a
-JOIN DOCTOR d ON a.mddr_id = d.dr_id
-JOIN PATIENT p ON p.pt_no = a.pt_no
-WHERE DATE_FORMAT(a.APNT_YMD, '%Y-%m-%d') = '2022-04-13' AND a.apnt_cncl_yn = 'N'
-ORDER BY a.apnt_ymd
+JOIN PATIENT p ON a.PT_NO = p.PT_NO
+JOIN DOCTOR d ON a.MDDR_ID = d.DR_ID
+WHERE a.APNT_YMD >= '2022-04-13' AND a.APNT_YMD < '2022-04-14'
+  AND a.MCDP_CD = 'CS' AND a.APNT_CNCL_YN = 'N'
+ORDER BY a.APNT_YMD ASC
