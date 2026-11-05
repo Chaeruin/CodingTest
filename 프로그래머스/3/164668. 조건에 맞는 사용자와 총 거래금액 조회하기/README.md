@@ -1,10 +1,10 @@
 # [level 3] 조건에 맞는 사용자와 총 거래금액 조회하기 - 164668 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/164668?language=mysql) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/164668) 
 
 ### 성능 요약
 
-메모리: 0.0 MB, 시간: 0.00 ms
+메모리: undefined, 시간: 
 
 ### 구분
 
@@ -12,11 +12,11 @@
 
 ### 채점결과
 
-Empty
+합계: 100.0 / 100.0
 
 ### 제출 일자
 
-2025년 02월 17일 22:53:40
+2026년 11월 05일 10:46:54
 
 ### 문제 설명
 
